@@ -3,16 +3,16 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Library</title>
+  <title>Library Homepage</title>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
     body {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', 'Times New Roman', serif;
+      font-family: 'Arial', sans-serif;
+      background: #ffffff;
       height: 100%;
-      overflow-x: hidden;
     }
 
     *, *::before, *::after {
@@ -24,48 +24,78 @@
       scroll-behavior: smooth;
     }
 
-    /* Navigation Styles */
-    nav {
+    /* Header/Navigation Styles */
+    header {
       background: #1e3a8a;
-      padding: 1rem 2rem;
+      padding: 1.5rem 2rem;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .nav-container {
-      max-width: 1200px;
+    .header-container {
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .logo {
-      color: #fbbf24;
-      font-size: 1.5rem;
+    .site-title {
+      color: #ffffff;
+      font-size: 1.8rem;
       font-weight: bold;
-      text-decoration: none;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .title-accent {
+      color: #fbbf24;
     }
 
     .nav-menu {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
       margin: 0;
       padding: 0;
+      align-items: center;
+    }
+
+    .nav-menu li {
+      margin: 0;
     }
 
     .nav-menu a {
-      color: #fbbf24;
+      color: #ffffff;
       text-decoration: none;
       font-size: 1rem;
+      font-weight: 500;
       transition: color 0.3s;
+      position: relative;
+      padding-bottom: 0.3rem;
     }
 
     .nav-menu a:hover {
-      color: #ffffff;
+      color: #fbbf24;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #fbbf24;
+      transition: width 0.3s ease;
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
     }
 
     /* Hamburger Menu */
@@ -75,20 +105,20 @@
       cursor: pointer;
       background: none;
       border: none;
-      padding: 0;
+      padding: 0.5rem;
     }
 
     .hamburger span {
-      width: 25px;
+      width: 28px;
       height: 3px;
       background: #fbbf24;
-      margin: 3px 0;
+      margin: 4px 0;
       transition: all 0.3s ease;
       border-radius: 3px;
     }
 
     .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(8px, 8px);
+      transform: rotate(45deg) translate(9px, 9px);
     }
 
     .hamburger.active span:nth-child(2) {
@@ -96,151 +126,174 @@
     }
 
     .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
+      transform: rotate(-45deg) translate(8px, -8px);
     }
 
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-      padding: 6rem 2rem;
+    /* Hero Section with Large Image */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      background: #f3f4f6;
+      overflow: hidden;
+    }
+
+    .hero-image-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    }
+
+    .hero-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
       text-align: center;
-      color: #1e3a8a;
+      padding: 2rem;
     }
 
-    .hero h1 {
-      font-size: 3rem;
+    .hero-placeholder svg {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .hero-placeholder h2 {
+      font-size: 2.5rem;
       margin: 0 0 1rem 0;
       font-weight: bold;
     }
 
-    .hero p {
-      font-size: 1.3rem;
+    .hero-placeholder p {
+      font-size: 1.2rem;
       margin: 0 0 2rem 0;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      opacity: 0.95;
     }
 
-    .cta-button {
-      background: #1e3a8a;
-      color: #fbbf24;
+    .hero-button {
+      background: #fbbf24;
+      color: #1e3a8a;
       padding: 1rem 2.5rem;
       font-size: 1.1rem;
+      font-weight: bold;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      transition: all 0.3s;
-      font-weight: bold;
-      text-decoration: none;
-      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3);
     }
 
-    .cta-button:hover {
-      background: #2563eb;
+    .hero-button:hover {
+      background: #f59e0b;
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 6px 15px rgba(251, 191, 36, 0.4);
     }
 
-    /* Sections */
-    section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
+    .image-note {
+      font-size: 0.9rem;
+      color: #fbbf24;
+      margin-top: 1rem;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    /* Content Section */
+    .content-section {
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 4rem 2rem;
     }
 
-    section h2 {
+    .content-section h2 {
       color: #1e3a8a;
       font-size: 2.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-align: center;
     }
 
-    #about {
-      background: #ffffff;
-    }
-
-    #about p {
+    .content-section p {
+      color: #4b5563;
       font-size: 1.1rem;
       line-height: 1.8;
-      color: #333;
       text-align: center;
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
-    #services {
-      background: #fef3c7;
+    .accent-bar {
+      width: 80px;
+      height: 4px;
+      background: #fbbf24;
+      margin: 0 auto 2rem auto;
+      border-radius: 2px;
     }
 
-    .services-grid {
+    /* Feature Cards */
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      margin-top: 2rem;
+      margin-top: 3rem;
     }
 
-    .service-card {
+    .feature-card {
       background: #ffffff;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border-top: 4px solid #fbbf24;
     }
 
-    .service-card:hover {
+    .feature-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
-    .service-icon {
+    .feature-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
     }
 
-    .service-card h3 {
+    .feature-card h3 {
       color: #1e3a8a;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
     }
 
-    .service-card p {
-      color: #666;
-      line-height: 1.6;
-    }
-
-    #policies {
-      background: #ffffff;
-    }
-
-    .policy-list {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .policy-item {
-      background: #fef3c7;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      border-left: 4px solid #1e3a8a;
-    }
-
-    .policy-item h3 {
-      color: #1e3a8a;
-      margin-bottom: 0.5rem;
-    }
-
-    .policy-item p {
-      color: #333;
-      margin: 0;
-      line-height: 1.6;
+    .feature-card p {
+      color: #6b7280;
+      font-size: 1rem;
+      text-align: left;
     }
 
     /* Footer */
     footer {
       background: #1e3a8a;
-      color: #fbbf24;
+      color: #ffffff;
       text-align: center;
-      padding: 2rem;
+      padding: 2.5rem 2rem;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .footer-accent {
+      color: #fbbf24;
+      font-weight: bold;
     }
 
     /* Mobile Responsive */
@@ -248,34 +301,56 @@
       .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 80px;
         flex-direction: column;
         background: #1e3a8a;
         width: 100%;
         text-align: center;
         transition: left 0.3s ease;
         padding: 2rem 0;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        gap: 1.5rem;
       }
 
       .nav-menu.active {
         left: 0;
       }
 
+      .nav-menu a::after {
+        display: none;
+      }
+
       .hamburger {
         display: flex;
       }
 
-      .hero h1 {
+      .site-title {
+        font-size: 1.3rem;
+      }
+
+      .hero-section {
+        height: 400px;
+      }
+
+      .hero-placeholder h2 {
+        font-size: 1.8rem;
+      }
+
+      .hero-placeholder p {
+        font-size: 1rem;
+      }
+
+      .hero-placeholder svg {
+        width: 80px;
+        height: 80px;
+      }
+
+      .content-section h2 {
         font-size: 2rem;
       }
 
-      .hero p {
-        font-size: 1.1rem;
-      }
-
-      section h2 {
-        font-size: 2rem;
+      .features-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -284,101 +359,77 @@
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body>
-  <nav id="navbar">
-   <div class="nav-container"><a href="#home" class="logo" id="library-name">📚 Community Library</a>
-    <ul class="nav-menu" id="nav-menu">
-     <li><a href="#home">Home</a></li>
-     <li><a href="#about">About</a></li>
-     <li><a href="#services">Services</a></li>
-     <li><a href="#policies">Policies</a></li>
-    </ul><button class="hamburger" id="hamburger" aria-label="Toggle menu"> <span></span> <span></span> <span></span> </button>
+  <header>
+   <div class="header-container">
+    <h1 class="site-title" id="site-title">📚 <span>Community</span> <span class="title-accent" id="title-accent">Library</span></h1>
+    <nav>
+     <ul class="nav-menu" id="nav-menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#policies">Policies</a></li>
+      <li><a href="#contact">Contact</a></li>
+     </ul>
+    </nav><button class="hamburger" id="hamburger" aria-label="Toggle menu"> <span></span> <span></span> <span></span> </button>
    </div>
-  </nav>
+  </header>
   <main>
-   <section id="home" class="hero">
-    <h1 id="hero-title">Welcome to Your Community Library</h1>
-    <p id="hero-subtitle">Discover a world of knowledge, stories, and endless possibilities. Join our community of readers today!</p><a href="#about" class="cta-button" id="cta-button">Explore Now</a>
-   </section>
-   <section id="about">
-    <h2 id="about-title">About Us</h2>
-    <p id="about-text">Our library has been serving the community for over 50 years, providing access to thousands of books, digital resources, and educational programs. We believe in fostering a love for reading and lifelong learning for people of all ages.</p>
-   </section>
-   <section id="services">
-    <h2 id="services-title">Our Services</h2>
-    <div class="services-grid">
-     <div class="service-card">
-      <div class="service-icon">
-       📖
-      </div>
-      <h3>Book Lending</h3>
-      <p>Access our extensive collection of books across all genres and subjects.</p>
-     </div>
-     <div class="service-card">
-      <div class="service-icon">
-       💻
-      </div>
-      <h3>Digital Resources</h3>
-      <p>E-books, audiobooks, and online databases available 24/7.</p>
-     </div>
-     <div class="service-card">
-      <div class="service-icon">
-       👥
-      </div>
-      <h3>Community Programs</h3>
-      <p>Reading clubs, workshops, and educational events for all ages.</p>
-     </div>
-     <div class="service-card">
-      <div class="service-icon">
-       🎓
-      </div>
-      <h3>Study Spaces</h3>
-      <p>Quiet areas and group study rooms available for reservation.</p>
+   <section id="home" class="hero-section">
+    <div class="hero-image-container"><!-- Replace this section with your own image -->
+     <div class="hero-placeholder">
+      <svg viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <h2 id="hero-title">Welcome to Your Community Library</h2>
+      <p id="hero-subtitle">Discover thousands of books, resources, and programs designed to inspire and educate</p><button class="hero-button" id="hero-button">Get Started</button>
+      <p class="image-note">Replace this placeholder with your library image</p>
      </div>
     </div>
    </section>
-   <section id="policies">
-    <h2 id="policies-title">Library Policies</h2>
-    <div class="policy-list">
-     <div class="policy-item">
-      <h3>Membership</h3>
-      <p>Free membership available to all community residents. Bring a valid ID and proof of address to register.</p>
+   <section class="content-section">
+    <h2>Explore Our Collection</h2>
+    <div class="accent-bar"></div>
+    <p>Welcome to our digital library space. Browse through our extensive collection of resources, discover new programs, and connect with our community of readers and learners.</p>
+    <div class="features-grid">
+     <div class="feature-card">
+      <div class="feature-icon">
+       📚
+      </div>
+      <h3>Vast Collection</h3>
+      <p>Access thousands of books across all genres, from classic literature to modern bestsellers.</p>
      </div>
-     <div class="policy-item">
-      <h3>Borrowing Period</h3>
-      <p>Books can be borrowed for up to 3 weeks with the option to renew twice if no holds are placed.</p>
+     <div class="feature-card">
+      <div class="feature-icon">
+       💻
+      </div>
+      <h3>Digital Access</h3>
+      <p>E-books and audiobooks available 24/7 from anywhere with your library card.</p>
      </div>
-     <div class="policy-item">
-      <h3>Late Returns</h3>
-      <p>A grace period of 3 days is provided. After that, a nominal fee applies to encourage timely returns.</p>
-     </div>
-     <div class="policy-item">
-      <h3>Conduct</h3>
-      <p>Please maintain a respectful environment. Keep noise levels low and mobile devices on silent mode.</p>
+     <div class="feature-card">
+      <div class="feature-icon">
+       👥
+      </div>
+      <h3>Community Events</h3>
+      <p>Join book clubs, author talks, workshops, and educational programs for all ages.</p>
      </div>
     </div>
    </section>
   </main>
   <footer>
-   <p id="footer-text">© 2024 Community Library. All rights reserved. Opening Hours: Mon-Sat 9AM-8PM, Sun 10AM-6PM</p>
+   <p>© 2024 <span class="footer-accent">Community Library</span>. All rights reserved.</p>
   </footer>
   <script>
     const defaultConfig = {
-      background_color: '#fbbf24',
-      surface_color: '#ffffff',
+      header_color: '#1e3a8a',
+      accent_color: '#fbbf24',
+      background_color: '#ffffff',
       text_color: '#1e3a8a',
-      primary_action_color: '#1e3a8a',
-      secondary_action_color: '#f59e0b',
-      font_family: 'Georgia',
+      button_color: '#fbbf24',
+      font_family: 'Arial',
       font_size: 16,
-      library_name: '📚 Community Library',
+      site_title: 'Community Library',
       hero_title: 'Welcome to Your Community Library',
-      hero_subtitle: 'Discover a world of knowledge, stories, and endless possibilities. Join our community of readers today!',
-      cta_button: 'Explore Now',
-      about_title: 'About Us',
-      about_text: 'Our library has been serving the community for over 50 years, providing access to thousands of books, digital resources, and educational programs. We believe in fostering a love for reading and lifelong learning for people of all ages.',
-      services_title: 'Our Services',
-      policies_title: 'Library Policies',
-      footer_text: '© 2024 Community Library. All rights reserved. Opening Hours: Mon-Sat 9AM-8PM, Sun 10AM-6PM'
+      hero_subtitle: 'Discover thousands of books, resources, and programs designed to inspire and educate',
+      hero_button: 'Get Started'
     };
 
     // Hamburger menu functionality
@@ -401,72 +452,70 @@
     // Element SDK implementation
     async function onConfigChange(config) {
       const customFont = config.font_family || defaultConfig.font_family;
-      const baseFontStack = 'Georgia, Times New Roman, serif';
+      const baseFontStack = 'Arial, sans-serif';
       const baseSize = config.font_size || defaultConfig.font_size;
 
       // Apply colors
-      const hero = document.querySelector('.hero');
-      hero.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
-      hero.style.color = config.text_color || defaultConfig.text_color;
-
-      const nav = document.querySelector('nav');
-      nav.style.background = config.primary_action_color || defaultConfig.primary_action_color;
-
-      const footer = document.querySelector('footer');
-      footer.style.background = config.primary_action_color || defaultConfig.primary_action_color;
-      footer.style.color = config.background_color || defaultConfig.background_color;
-
-      document.querySelectorAll('.nav-menu a, .logo, .hamburger span').forEach(el => {
-        el.style.color = config.background_color || defaultConfig.background_color;
-        if (el.classList.contains('hamburger')) {
-          el.style.background = config.background_color || defaultConfig.background_color;
-        }
+      document.querySelector('header').style.background = config.header_color || defaultConfig.header_color;
+      document.querySelector('footer').style.background = config.header_color || defaultConfig.header_color;
+      
+      document.querySelectorAll('.title-accent, .footer-accent, .accent-bar').forEach(el => {
+        el.style.color = config.accent_color || defaultConfig.accent_color;
+      });
+      
+      document.querySelector('.accent-bar').style.background = config.accent_color || defaultConfig.accent_color;
+      
+      document.querySelectorAll('.hamburger span').forEach(span => {
+        span.style.background = config.accent_color || defaultConfig.accent_color;
       });
 
-      document.querySelectorAll('section h2, .service-card h3, .policy-item h3').forEach(el => {
+      document.querySelector('body').style.background = config.background_color || defaultConfig.background_color;
+      
+      document.querySelectorAll('.content-section h2, .feature-card h3').forEach(el => {
         el.style.color = config.text_color || defaultConfig.text_color;
       });
 
-      const ctaButton = document.querySelector('.cta-button');
-      ctaButton.style.background = config.primary_action_color || defaultConfig.primary_action_color;
-      ctaButton.style.color = config.background_color || defaultConfig.background_color;
+      const heroButton = document.querySelector('.hero-button');
+      heroButton.style.background = config.button_color || defaultConfig.button_color;
+      heroButton.style.color = config.text_color || defaultConfig.text_color;
 
-      document.querySelectorAll('.service-card').forEach(card => {
-        card.style.background = config.surface_color || defaultConfig.surface_color;
-      });
-
-      document.querySelectorAll('.policy-item').forEach(item => {
-        item.style.background = '#fef3c7';
-        item.style.borderLeftColor = config.text_color || defaultConfig.text_color;
+      document.querySelectorAll('.feature-card').forEach(card => {
+        card.style.borderTopColor = config.accent_color || defaultConfig.accent_color;
       });
 
       // Apply fonts
       document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
 
       // Apply font sizes
-      document.querySelector('.hero h1').style.fontSize = `${baseSize * 3}px`;
-      document.querySelector('.hero p').style.fontSize = `${baseSize * 1.3}px`;
-      document.querySelectorAll('section h2').forEach(h2 => {
-        h2.style.fontSize = `${baseSize * 2.5}px`;
-      });
-      document.querySelectorAll('p').forEach(p => {
-        p.style.fontSize = `${baseSize * 1.1}px`;
-      });
-      document.querySelector('.cta-button').style.fontSize = `${baseSize * 1.1}px`;
+      document.querySelector('.site-title').style.fontSize = `${baseSize * 1.8}px`;
       document.querySelectorAll('.nav-menu a').forEach(a => {
         a.style.fontSize = `${baseSize}px`;
       });
+      document.querySelector('.hero-placeholder h2').style.fontSize = `${baseSize * 2.5}px`;
+      document.querySelector('.hero-placeholder p').style.fontSize = `${baseSize * 1.2}px`;
+      document.querySelector('.hero-button').style.fontSize = `${baseSize * 1.1}px`;
+      document.querySelectorAll('.content-section h2').forEach(h2 => {
+        h2.style.fontSize = `${baseSize * 2.5}px`;
+      });
+      document.querySelectorAll('.content-section > p').forEach(p => {
+        p.style.fontSize = `${baseSize * 1.1}px`;
+      });
 
       // Apply text content
-      document.getElementById('library-name').textContent = config.library_name || defaultConfig.library_name;
+      const titleAccent = document.getElementById('title-accent');
+      const titleParts = (config.site_title || defaultConfig.site_title).split(' ');
+      if (titleParts.length > 1) {
+        const lastWord = titleParts.pop();
+        document.querySelector('.site-title span:first-of-type').textContent = titleParts.join(' ');
+        titleAccent.textContent = lastWord;
+      } else {
+        document.querySelector('.site-title span:first-of-type').textContent = config.site_title || defaultConfig.site_title;
+        titleAccent.textContent = '';
+      }
+      
       document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
       document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
-      document.getElementById('cta-button').textContent = config.cta_button || defaultConfig.cta_button;
-      document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
-      document.getElementById('about-text').textContent = config.about_text || defaultConfig.about_text;
-      document.getElementById('services-title').textContent = config.services_title || defaultConfig.services_title;
-      document.getElementById('policies-title').textContent = config.policies_title || defaultConfig.policies_title;
-      document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
+      document.getElementById('hero-button').textContent = config.hero_button || defaultConfig.hero_button;
     }
 
     if (window.elementSdk) {
@@ -476,17 +525,24 @@
         mapToCapabilities: (config) => ({
           recolorables: [
             {
+              get: () => config.header_color || defaultConfig.header_color,
+              set: (value) => {
+                config.header_color = value;
+                window.elementSdk.setConfig({ header_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
               get: () => config.background_color || defaultConfig.background_color,
               set: (value) => {
                 config.background_color = value;
                 window.elementSdk.setConfig({ background_color: value });
-              }
-            },
-            {
-              get: () => config.surface_color || defaultConfig.surface_color,
-              set: (value) => {
-                config.surface_color = value;
-                window.elementSdk.setConfig({ surface_color: value });
               }
             },
             {
@@ -497,17 +553,10 @@
               }
             },
             {
-              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              get: () => config.button_color || defaultConfig.button_color,
               set: (value) => {
-                config.primary_action_color = value;
-                window.elementSdk.setConfig({ primary_action_color: value });
-              }
-            },
-            {
-              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
-              set: (value) => {
-                config.secondary_action_color = value;
-                window.elementSdk.setConfig({ secondary_action_color: value });
+                config.button_color = value;
+                window.elementSdk.setConfig({ button_color: value });
               }
             }
           ],
@@ -528,18 +577,13 @@
           }
         }),
         mapToEditPanelValues: (config) => new Map([
-          ['library_name', config.library_name || defaultConfig.library_name],
+          ['site_title', config.site_title || defaultConfig.site_title],
           ['hero_title', config.hero_title || defaultConfig.hero_title],
           ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
-          ['cta_button', config.cta_button || defaultConfig.cta_button],
-          ['about_title', config.about_title || defaultConfig.about_title],
-          ['about_text', config.about_text || defaultConfig.about_text],
-          ['services_title', config.services_title || defaultConfig.services_title],
-          ['policies_title', config.policies_title || defaultConfig.policies_title],
-          ['footer_text', config.footer_text || defaultConfig.footer_text]
+          ['hero_button', config.hero_button || defaultConfig.hero_button]
         ])
       });
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a1e76bc94aedd3a',t:'MTc2MzcxMDAzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a1e8253d0c20441',t:'MTc2MzcxMDUxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
