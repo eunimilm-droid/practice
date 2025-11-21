@@ -1,333 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Hub - Blue & Yellow Theme</title>
-
-<style>
-    :root {
-        --blue:#0b66ff;
-        --yellow:#ffcf33;
-        --bg:#e8f1ff;
-        --text-dark:#1d1d1d;
-        --white:#ffffff;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suffolk Clone</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background: #0b1a33;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
     }
 
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family:Arial, Helvetica, sans-serif;
+    nav {
+      display: flex;
+      gap: 25px;
     }
 
-    body{
-        background:var(--bg);
-        color:var(--text-dark);
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
     }
 
-    /* ---- NAVBAR ---- */
-    nav{
-        width:100%;
-        background:var(--white);
-        box-shadow:0 2px 8px rgba(0,0,0,0.1);
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        padding:12px 40px;
-        position:sticky;
-        top:0;
-        z-index:20;
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
     }
 
-    nav .logo{
-        font-size:24px;
-        font-weight:bold;
-        color:var(--blue);
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
     }
 
-    nav ul{
-        list-style:none;
-        display:flex;
-        gap:30px;
+    /* Hero section */
+    .hero {
+      margin-top: 90px;
+      background: url('/mnt/data/7be5d993-04c9-4ed0-b678-4645c8d37580.png') center/cover no-repeat;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      text-shadow: 0 0 5px black;
     }
 
-    nav ul li{
-        position:relative;
-        cursor:pointer;
-        padding:8px 0;
+    .hero h1 {
+      font-size: 50px;
+      margin: 0;
+      font-weight: 900;
     }
 
-    nav ul li:hover{
-        color:var(--blue);
+    .hero p {
+      font-size: 20px;
+      margin: 10px 0 20px 0;
     }
 
-    /* ---- DROPDOWN ---- */
-    .dropdown-content{
-        display:none;
-        position:absolute;
-        top:35px;
-        left:0;
-        background:var(--white);
-        min-width:180px;
-        box-shadow:0 2px 8px rgba(0,0,0,0.15);
-        border-radius:6px;
-        overflow:hidden;
-        z-index:20;
+    button {
+      padding: 12px 20px;
+      border: none;
+      background: white;
+      color: #0b1a33;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
     }
 
-    .dropdown-content a{
-        display:block;
-        padding:10px 15px;
-        color:var(--text-dark);
-        text-decoration:none;
-    }
+    /* Mobile menu */
+    @media (max-width: 900px) {
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #0b1a33;
+        flex-direction: column;
+        width: 200px;
+        padding: 20px;
+        display: none;
+      }
 
-    .dropdown-content a:hover{
-        background:var(--blue);
-        color:var(--white);
-    }
+      nav.show {
+        display: flex;
+      }
 
-    /* Hover opens */
-    nav ul li:hover .dropdown-content{
-        display:block;
+      .hamburger {
+        display: flex;
+      }
     }
-
-    /* Click opens */
-    .open{
-        display:block !important;
-    }
-
-    /* ---- HAMBURGER BUTTON ---- */
-    .hamburger{
-        display:none;
-        flex-direction:column;
-        gap:5px;
-        cursor:pointer;
-    }
-
-    .hamburger div{
-        width:28px;
-        height:3px;
-        background:var(--blue);
-        border-radius:5px;
-    }
-
-    /* ---- MOBILE SLIDE-IN MENU ---- */
-    .mobile-menu{
-        position:fixed;
-        top:0;
-        right:-260px;
-        width:260px;
-        height:100%;
-        background:var(--white);
-        box-shadow:-3px 0 10px rgba(0,0,0,0.2);
-        padding:40px 20px;
-        transition:0.3s ease;
-        display:flex;
-        flex-direction:column;
-        gap:20px;
-        z-index:30;
-    }
-
-    .mobile-menu.open{
-        right:0;
-    }
-
-    .mobile-menu a{
-        font-size:18px;
-        text-decoration:none;
-        color:var(--text-dark);
-        padding:10px 0;
-        border-bottom:1px solid #ddd;
-    }
-
-    .mobile-menu a:hover{
-        color:var(--blue);
-    }
-
-    /* ---- HERO SECTION ---- */
-    .hero{
-        width:100%;
-        height:330px;
-        background:url("your-background.jpg") center/cover no-repeat;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        text-align:center;
-        padding:20px;
-        color:white;
-    }
-
-    .hero h1{
-        font-size:48px;
-        font-weight:900;
-        text-shadow:0 2px 8px rgba(0,0,0,0.3);
-    }
-
-    /* ---- SEARCH BAR ---- */
-    .search-box{
-        background:var(--white);
-        width:55%;
-        margin-top:20px;
-        border-radius:40px;
-        padding:10px 20px;
-        display:flex;
-        align-items:center;
-        gap:10px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .search-box input{
-        width:100%;
-        border:none;
-        outline:none;
-        font-size:17px;
-    }
-
-    /* ---- TAGS ---- */
-    .tags{
-        display:flex;
-        gap:10px;
-        flex-wrap:wrap;
-        margin-top:20px;
-        justify-content:center;
-    }
-
-    .tag{
-        padding:8px 15px;
-        background:var(--yellow);
-        border-radius:20px;
-        color:var(--text-dark);
-        font-size:14px;
-        font-weight:bold;
-    }
-
-    /* ---- MOBILE BREAKPOINT ---- */
-    @media(max-width:900px){
-        nav ul{
-            display:none;
-        }
-        .hamburger{
-            display:flex;
-        }
-        .search-box{
-            width:85%;
-        }
-        .hero h1{
-            font-size:38px;
-        }
-    }
-</style>
+  </style>
 </head>
-
 <body>
+  <header>
+    <div class="logo">SUFFOLK UNIVERSITY</div>
 
-<!-- NAVIGATION -->
-<nav>
-    <div class="logo">THE HUB</div>
+    <nav id="menu">
+      <a href="#">About</a>
+      <a href="#">Academics</a>
+      <a href="#">Admission & Aid</a>
+      <a href="#">Student Life</a>
+      <a href="#">Alumni</a>
+    </nav>
 
-    <!-- Desktop Nav -->
-    <ul>
-        <li onclick="toggleDropdown(event)">Home</li>
-
-        <li onclick="toggleDropdown(event)">
-            Business Resources ▾
-            <div class="dropdown-content">
-                <a href="#">Forms</a>
-                <a href="#">Templates</a>
-                <a href="#">Documents</a>
-            </div>
-        </li>
-
-        <li onclick="toggleDropdown(event)">
-            Employee Center ▾
-            <div class="dropdown-content">
-                <a href="#">Payroll</a>
-                <a href="#">Benefits</a>
-                <a href="#">Schedules</a>
-            </div>
-        </li>
-
-        <li onclick="toggleDropdown(event)">
-            News ▾
-            <div class="dropdown-content">
-                <a href="#">Company News</a>
-                <a href="#">Market Updates</a>
-            </div>
-        </li>
-
-        <li onclick="toggleDropdown(event)">
-            Workspaces ▾
-            <div class="dropdown-content">
-                <a href="#">Teams</a>
-                <a href="#">Projects</a>
-            </div>
-        </li>
-    </ul>
-
-    <!-- Hamburger -->
-    <div class="hamburger" onclick="toggleMobileMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
-</nav>
+  </header>
 
-<!-- MOBILE SLIDE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-    <a href="#">Home</a>
-    <a href="#">Business Resources</a>
-    <a href="#">Employee Center</a>
-    <a href="#">News</a>
-    <a href="#">Workspaces</a>
-</div>
+  <section class="hero">
+    <h1>OURS FOR THE MAKING</h1>
+    <p>The Future is Yours. And It Starts Now.</p>
+    <button>Make Your Way</button>
+  </section>
 
-<!-- HERO SECTION -->
-<div class="hero">
-    <h1>Welcome!</h1>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
 
-    <div class="search-box">
-        <input type="text" placeholder="Search forms & templates">
-    </div>
-
-    <div class="tags">
-        <div class="tag">Request Forms</div>
-        <div class="tag">Templates</div>
-        <div class="tag">Applications</div>
-        <div class="tag">Policies</div>
-        <div class="tag">SOPs</div>
-        <div class="tag">Projects</div>
-        <div class="tag">Handbook</div>
-    </div>
-</div>
-
-<script>
-/* DESKTOP DROPDOWN */
-function toggleDropdown(event){
-    event.stopPropagation();
-    const dropdown = event.currentTarget.querySelector(".dropdown-content");
-
-    // close others
-    document.querySelectorAll(".dropdown-content").forEach(d => {
-        if(d !== dropdown) d.classList.remove("open");
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('show');
     });
-
-    if(dropdown){
-        dropdown.classList.toggle("open");
-    }
-}
-
-document.addEventListener("click", () => {
-    document.querySelectorAll(".dropdown-content").forEach(d => d.classList.remove("open"));
-});
-
-/* MOBILE MENU */
-function toggleMobileMenu(){
-    document.getElementById("mobileMenu").classList.toggle("open");
-}
-</script>
-
+  </script>
 </body>
 </html>
