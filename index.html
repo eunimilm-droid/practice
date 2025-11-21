@@ -1,1 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hub - Blue & Yellow Theme</title>
+
+<style>
+    :root{
+        --blue:#0b66ff;
+        --yellow:#ffcf33;
+        --bg:#e8f1ff;
+        --text-dark:#1d1d1d;
+        --white:#ffffff;
+    }
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        background:var(--bg);
+        color:var(--text-dark);
+    }
+
+    /* ---- NAVBAR ---- */
+    nav{
+        width:100%;
+        background:var(--white);
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:12px 40px;
+        position:sticky;
+        top:0;
+        z-index:10;
+    }
+
+    nav .logo{
+        font-size:24px;
+        font-weight:bold;
+        color:var(--blue);
+    }
+
+    nav ul{
+        list-style:none;
+        display:flex;
+        gap:30px;
+    }
+
+    nav ul li{
+        position:relative;
+        cursor:pointer;
+        padding:8px 0;
+    }
+
+    nav ul li:hover{
+        color:var(--blue);
+    }
+
+    /* ---- DROPDOWN ---- */
+    .dropdown-content{
+        display:none;
+        position:absolute;
+        top:35px;
+        left:0;
+        background:var(--white);
+        min-width:180px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.15);
+        border-radius:6px;
+        overflow:hidden;
+        z-index:20;
+    }
+
+    .dropdown-content a{
+        display:block;
+        padding:10px 15px;
+        color:var(--text-dark);
+        text-decoration:none;
+    }
+
+    .dropdown-content a:hover{
+        background:var(--blue);
+        color:var(--white);
+    }
+
+    /* Hover opens */
+    nav ul li:hover .dropdown-content{
+        display:block;
+    }
+
+    /* Click opens */
+    .open{
+        display:block !important;
+    }
+
+    /* ---- HERO SECTION ---- */
+    .hero{
+        width:100%;
+        height:330px;
+        background:url("your-background.jpg") center/cover no-repeat; /* <<< Replace Image */
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        padding:20px;
+        color:white;
+    }
+
+    .hero h1{
+        font-size:48px;
+        font-weight:900;
+        text-shadow:0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    /* ---- SEARCH BAR ---- */
+    .search-box{
+        background:var(--white);
+        width:55%;
+        margin-top:20px;
+        border-radius:40px;
+        padding:10px 20px;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .search-box input{
+        width:100%;
+        border:none;
+        outline:none;
+        font-size:17px;
+    }
+
+    /* ---- TAGS ---- */
+    .tags{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-top:20px;
+        justify-content:center;
+    }
+
+    .tag{
+        padding:8px 15px;
+        background:var(--yellow);
+        border-radius:20px;
+        color:var(--text-dark);
+        font-size:14px;
+        font-weight:bold;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION BAR -->
+<nav>
+    <div class="logo">THE HUB</div>
+    <ul>
+        <li onclick="toggleDropdown(event)">Home</li>
+
+        <li onclick="toggleDropdown(event)">
+            Business Resources ▾
+            <div class="dropdown-content">
+                <a href="#">Forms</a>
+                <a href="#">Templates</a>
+                <a href="#">Documents</a>
+            </div>
+        </li>
+
+        <li onclick="toggleDropdown(event)">
+            Employee Center ▾
+            <div class="dropdown-content">
+                <a href="#">Payroll</a>
+                <a href="#">Benefits</a>
+                <a href="#">Schedules</a>
+            </div>
+        </li>
+
+        <li onclick="toggleDropdown(event)">
+            News ▾
+            <div class="dropdown-content">
+                <a href="#">Company News</a>
+                <a href="#">Market Updates</a>
+            </div>
+        </li>
+
+        <li onclick="toggleDropdown(event)">
+            Workspaces ▾
+            <div class="dropdown-content">
+                <a href="#">Teams</a>
+                <a href="#">Projects</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<!-- HERO SECTION -->
+<div class="hero">
+    <h1>Welcome!</h1>
+
+    <div class="search-box">
+        <input type="text" placeholder="Search forms & templates">
+    </div>
+
+    <div class="tags">
+        <div class="tag">Request Forms</div>
+        <div class="tag">Templates</div>
+        <div class="tag">Applications</div>
+        <div class="tag">Policies</div>
+        <div class="tag">SOPs</div>
+        <div class="tag">Projects</div>
+        <div class="tag">Handbook</div>
+    </div>
+</div>
+
+<script>
+/* CLICK TO OPEN DROPDOWN */
+function toggleDropdown(event){
+    event.stopPropagation();
+
+    const dropdown = event.currentTarget.querySelector(".dropdown-content");
+
+    // Close all other dropdowns
+    document.querySelectorAll(".dropdown-content").forEach(d => {
+        if(d !== dropdown) d.classList.remove("open");
+    });
+
+    if(dropdown){
+        dropdown.classList.toggle("open");
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener("click", () => {
+    document.querySelectorAll(".dropdown-content").forEach(d => d.classList.remove("open"));
+});
+</script>
+
+</body>
+</html>
 
