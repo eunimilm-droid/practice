@@ -276,8 +276,23 @@
 
       .hero-section h1 { font-size: 2rem; }
       .hero-section p { font-size: 1rem; }
-    }
-	
+  .wrap {
+    display: flex !important; /* override grid */
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .wrap aside {
+    order: -1; /* move search bar to the top */
+    width: 100%;
+  }
+
+  .wrap section {
+    order: 1; /* main content below */
+    width: 100%;
+  }
+}
+
 	:root{
       --maroon:#7b1212;
       --muted:#6b6b6b;
