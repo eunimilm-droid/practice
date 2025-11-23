@@ -9,7 +9,7 @@
 
   <style>
     .myImage { width: 500px; height: auto; max-width: 100%; }
-
+    .campus { width: 100%; height: auto; display: block; } 
     body {
       box-sizing: border-box;
       margin: 0;
@@ -275,28 +275,6 @@
       .hero-section p { font-size: 1rem; }
     }
 
-    /* Set the background image */
-    .body {
-  background: url('Campus-Library2.png') no-repeat center center fixed;
-  background-size: cover; /* cover the whole screen */
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-}
-
-/* Mobile breakpoint */
-@media (max-width: 768px) {
-  .body {
-    background: url('Campus-Library2.png') no-repeat center center fixed;
-	height: 100%;
-  width: 100%;
-    background-size: cover;
-  }
-}
 
   </style>
 </head>
@@ -329,6 +307,10 @@
       </button>
     </div>
   </header>
+  <picture>
+  <source srcset="Campus-Library2.png" media="(max-width: 900px)">
+  <img src="Campus-Library2.png" class="campus" alt="Campus Library">
+</picture>
 <div class="body">
   </div>
   <!-- HERO -->
